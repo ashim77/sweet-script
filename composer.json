@@ -1,0 +1,19 @@
+{
+    "name": "sweet/script",
+    "description": "A script based plugin",
+    "type": "wordpress-plugin",
+    "license": "GPLv2",
+    "autoload": {
+        "psr-4": {
+            "Sweet\\Script\\": "includes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ashim Kumar",
+            "email": "simt.ashim@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
