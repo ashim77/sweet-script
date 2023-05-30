@@ -2,7 +2,7 @@
 
 namespace Sweet\Script;
 
-class Admin{
+class Admin {
 
     /**
      * Initialize the class

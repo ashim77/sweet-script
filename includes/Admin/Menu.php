@@ -5,10 +5,9 @@ namespace Sweet\Script\Admin;
 /**
  * The Menu handler class
  */
-class Menu{
+class Menu {
 
-    function __construct()
-    {
+    function __construct() {
         add_action( 'admin_menu', [ $this, 'admin_menu' ] );
     }
 
@@ -22,18 +21,18 @@ class Menu{
         $capability = 'manage_options';
 
         add_menu_page( 
-            __( 'Sweet Script', 'sweet-script' ), 
-            __( 'Script', 'sweet-script' ), 
+            __( 'Sweet Script', 'sweet-scripts' ), 
+            __( 'Script', 'sweet-scripts' ), 
             $capability, 
             $parent_slug, 
             [ $this, 'plugin_page' ], 
-            'dashicons-welcome-learn-more' 
+            'dashicons-media-code' 
         );
 
         add_submenu_page( 
             $parent_slug, 
-            __('Script List','sweet-script'), 
-            __('Script List','sweet-script'), 
+            __('Script List','sweet-scripts'), 
+            __('Script List','sweet-scripts'), 
             $capability, 
             $parent_slug, 
             [ $this, 'plugin_page' ] 
@@ -41,14 +40,24 @@ class Menu{
 
         add_submenu_page(
             $parent_slug, 
-            __('Script Global Settings','sweet-script'), 
-            __('Settings','sweet-script'), 
+            __('Script Global Settings','sweet-scripts'), 
+            __('Settings','sweet-scripts'), 
             $capability, 
             'sweet-script-settings', 
             [ $this, 'settings_page' ] 
         );
 
-    }    
+    }
+
+    /**
+     * Render the Script List
+     *
+     * @return void
+     */
+    public function plugin_page() {
+        $scripts = new Scripts();
+        $scripts->plugin_page();
+    }
     
     /**
      * Render the Settings page

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name: Sweet Script
+ * Plugin Name: Sweet Scripts
  * Description: This plugin allows you to insert scripts or code in your header and footer
  * Plugin URI: https://iamashim.com/
  * Author: Ashim Kumar
@@ -11,7 +11,7 @@
  * Requires PHP: 5.2
  * License: GPL2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain: sweetcode
+ * Text Domain: sweet-scripts
  */
 
 if (!defined('ABSPATH')) {
@@ -23,17 +23,15 @@ require_once __DIR__ . '/vendor/autoload.php';
 /**
  * The plugin main final class
  */
-final class Sweet_Script
-{
+final class Sweet_Script {
     const version = '1.0.0';
 
-    public function __construct()
-    {
+    private function __construct() {
         $this->define_constants();
 
-        register_activation_hook(__FILE__, [$this, 'activate']);
+        register_activation_hook( __FILE__, [$this, 'activate'] );
 
-        add_action('plugins_loaded', [$this, 'init_plugin']);
+        add_action( 'plugins_loaded', [ $this, 'init_plugin' ] );
     }
 
     /**
@@ -41,11 +39,10 @@ final class Sweet_Script
      *
      * @return \Sweet_Script
      */
-    public static function init()
-    {
+    public static function init() {
         static $instance = false;
 
-        if (!$instance) {
+        if ( !$instance ) {
             $instance = new self();
         }
 
@@ -57,13 +54,12 @@ final class Sweet_Script
      *
      * @return void
      */
-    public function define_constants()
-    {
-        define('SS_VERSION', self::version);
-        define('SS_FILE', __FILE__);
-        define('SS_PATH', __DIR__);
-        define('SS_URL', plugins_url('', SS_FILE));
-        define('SS_ASSETS', SS_URL . '/assets');
+    public function define_constants() {
+        define( 'SS_VERSION', self::version );
+        define( 'SS_FILE', __FILE__ );
+        define( 'SS_PATH', __DIR__ );
+        define( 'SS_URL', plugins_url( '', SS_FILE ) );
+        define( 'SS_ASSETS', SS_URL . '/assets' );
     }
 
     /**
@@ -71,8 +67,7 @@ final class Sweet_Script
      *
      * @return void
      */
-    public function init_plugin()
-    {
+    public function init_plugin() {
         if (is_admin()) {
             new Sweet\Script\Admin();
         } else {
@@ -85,9 +80,13 @@ final class Sweet_Script
      *
      * @return void
      */
-    public function activate()
-    {
+    public function activate() {
         // Code to be executed upon plugin activation
+        $installed = get_option( 'sweet-scripts-installed' );
+        if( ! $installed ){
+            update_option( 'sweet-scripts-installed', time() );
+        }
+        update_option( 'sweet-scripts-version', SS_VERSION );
     }
 }
 
@@ -96,8 +95,7 @@ final class Sweet_Script
  *
  * @return \Sweet_Script
  */
-function Sweet_Script()
-{
+function Sweet_Script() {
     return Sweet_Script::init();
 }
 
