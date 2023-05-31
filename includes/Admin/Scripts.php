@@ -29,4 +29,27 @@ class Scripts {
             include $template;
         }
     }
+
+    /**
+     * Form Handler
+     *
+     * @return void
+     */    
+    public function form_handler() {
+
+        if( ! isset( $_POST['submit_script'] ) ) {
+            return;
+        }
+
+        if( ! wp_verify_nonce( $_POST['_wpnonce'] , 'new-script' ) ) {
+            wp_die( 'Are you cheating?' );
+        }
+
+        if( ! current_user_can( 'manage_options' ) ) {
+            wp_die( 'Are you cheating?' );
+        }
+
+        var_dump($_POST);
+        exit;
+    }
 }
