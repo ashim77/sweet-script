@@ -6,7 +6,8 @@
     "autoload": {
         "psr-4": {
             "Sweet\\Script\\": "includes/"
-        }
+        },
+        "files": [ "includes/functions.php" ]
     },
     "authors": [
         {

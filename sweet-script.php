@@ -81,12 +81,8 @@ final class Sweet_Script {
      * @return void
      */
     public function activate() {
-        // Code to be executed upon plugin activation
-        $installed = get_option( 'sweet-scripts-installed' );
-        if( ! $installed ){
-            update_option( 'sweet-scripts-installed', time() );
-        }
-        update_option( 'sweet-scripts-version', SS_VERSION );
+        $installer = new \Sweet\Script\Installer();
+        $installer->run();
     }
 }
 

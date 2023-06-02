@@ -3,8 +3,16 @@
 namespace Sweet\Script\Admin;
 
 class Scripts {
+
+    public $errors = [];
+
+    /**
+     * Plugin page handler
+     * 
+     * @return void
+     */
     public function plugin_page() {
-        // echo 'Hello From Script List';
+
         $action = isset( $_GET['action'] ) ? $_GET['action'] : 'list';
 
         switch ($action) {
@@ -49,7 +57,29 @@ class Scripts {
             wp_die( 'Are you cheating?' );
         }
 
-        var_dump($_POST);
+        $name = isset( $_POST['name'] ) ? sanitize_text_field( $_POST['name'] ) : '';
+        $messages = isset( $_POST['messages'] ) ? sanitize_textarea_field( $_POST['messages'] ) : '';
+
+        if( empty( $name ) ) {
+            $this->errors['name'] = __( 'Please provide a name', 'sweet-scripts' );
+        } 
+
+        if ( ! empty( $this->errors ) ) {
+            return;
+        }
+
+        $inserted_in = swt_inster_script([
+            'name'      => $name,
+            'messages'   => $messages,
+        ]);
+
+        if( is_wp_error( $inserted_in ) ) {
+            wp_die( $inserted_in->get_error_message() );
+        }
+
+        $redirected_to = admin_url( 'admin.php?page=sweet-script&inserted=true' );
+        wp_redirect( $redirected_to );
+        
         exit;
     }
 }

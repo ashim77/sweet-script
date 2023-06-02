@@ -22,7 +22,7 @@ class Menu {
 
         add_menu_page( 
             __( 'Sweet Script', 'sweet-scripts' ), 
-            __( 'Script', 'sweet-scripts' ), 
+            __( 'Sweet Script', 'sweet-scripts' ), 
             $capability, 
             $parent_slug, 
             [ $this, 'plugin_page' ], 
