@@ -8,12 +8,12 @@ class Admin {
      * Initialize the class
      */
     function __construct() {   
-        $this->dispatch_actions();     
-        new Admin\Menu();
+        $script = new Admin\Scripts();
+        $this->dispatch_actions( $script );     
+        new Admin\Menu( $script );
     }
 
-    public function dispatch_actions() {
-        $script = new Admin\Scripts();
+    public function dispatch_actions( $script ) {
         add_action( 'admin_init', [ $script, 'form_handler' ] );
     }
 }

@@ -7,7 +7,10 @@ namespace Sweet\Script\Admin;
  */
 class Menu {
 
-    function __construct() {
+    public $script;
+
+    function __construct( $script ) {
+        $this->script = $script;
         add_action( 'admin_menu', [ $this, 'admin_menu' ] );
     }
 
@@ -25,7 +28,7 @@ class Menu {
             __( 'Sweet Script', 'sweet-scripts' ), 
             $capability, 
             $parent_slug, 
-            [ $this, 'plugin_page' ], 
+            [ $this->script, 'plugin_page' ], 
             'dashicons-media-code' 
         );
 
@@ -35,7 +38,7 @@ class Menu {
             __('Script List','sweet-scripts'), 
             $capability, 
             $parent_slug, 
-            [ $this, 'plugin_page' ] 
+            [ $this->script, 'plugin_page' ] 
         );
 
         add_submenu_page(
@@ -47,16 +50,6 @@ class Menu {
             [ $this, 'settings_page' ] 
         );
 
-    }
-
-    /**
-     * Render the Script List
-     *
-     * @return void
-     */
-    public function plugin_page() {
-        $scripts = new Scripts();
-        $scripts->plugin_page();
     }
     
     /**
